@@ -1,1 +1,1 @@
-{"root":["../public/browser-app.ts","../src/server.ts","../src/routes/login.route.ts"],"version":"5.7.2"}
+{"root":["../public/browser-app.ts","../src/server.ts","../src/errors/custom-error.ts","../src/middlewares/errorhandler.middleware.ts","../src/middlewares/notfound.middleware.ts","../src/models/user.model.ts","../src/routes/login.route.ts","../types/customerror.types.ts"],"version":"5.7.2"}
