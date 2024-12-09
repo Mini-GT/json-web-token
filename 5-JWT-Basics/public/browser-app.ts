@@ -1,5 +1,3 @@
-import axios, { Axios, AxiosError } from 'axios'
-
 const formDOM = document.querySelector('.form')
 const usernameInputDOM = document.querySelector('.username-input')  as HTMLInputElement
 const passwordInputDOM = document.querySelector('.password-input') as HTMLInputElement
