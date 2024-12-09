@@ -11,7 +11,7 @@ const app = express()
 const port = process.env.PORT
 
 // middleware
-app.use(express.static('./public'))
+app.use(express.static('./dist/public'))
 app.use(express.json())
 
 app.use('/api/v1/users', userRouter)
@@ -21,6 +21,6 @@ app.use(errorHandlerMiddleware)
 app.use(notFound)
 
 app.listen(port, () => {
-  // connectDB()
+  connectDB()
   console.log(`Running on Port ${port}...`)
 })
