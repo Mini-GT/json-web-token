@@ -17,12 +17,12 @@ if intellisense is not reading the type acquisition do (view > command pallette:
 10. uncomment `"strictFunctionTypes": true` to make sure that when assigning functions, it checks to ensure the parameters and the return values are subtype-compatible.
 11. `npx tsc --build` (to compile ts into js)
 12. back to step 5, we can now run the file without error using `node ./dist/app.js`
-13. setup script in package.json. in script put `"build": "tsc --build"` so we only do `npm build` and it will compile the ts into js without typing `npx tsc --build`
+13. setup script in package.json. in script put `"build": "tsc --build"` so we only do `npm run build` and it will compile the ts into js without typing `npx tsc --build`
 14. setup script `"start": "./dist/app.js"` so we only do `npm start` and it will run the compiled js file
 15. setup nodemon so we dont have to start over and over. in script  `"start:dev": "nodemon ./src/app.ts"`
 16. in CLI `npm run start:dev` but will give error cause we dont have ts-node
 17. install ts-node `npm i -D ts-node`
-18. do step 16
+18. do step 16 (will have no more error)
 
 
  
