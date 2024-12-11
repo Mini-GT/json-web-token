@@ -32,7 +32,7 @@ formDOM.addEventListener('submit', async (e) => {
     resultDOM.innerHTML = ''
     tokenDOM.textContent = 'token present'
     tokenDOM.classList.add('text-success')
-  } catch (error) {
+  } catch (error: any) {
     if(axios.isAxiosError(error)) {
         formAlertDOM.style.display = 'block'
         formAlertDOM.textContent = error.response?.data?.msg|| 'An unknown error occurred.';
@@ -58,16 +58,14 @@ btnDOM.addEventListener('click', async () => {
       },
     })
     resultDOM.innerHTML = `<h5>${data.msg}</h5><p>${data.secret}</p>`
-
     data.secret
-  } catch (error) {
+  } catch (error: any) {
     if (axios.isAxiosError(error)) {
-        localStorage.removeItem('token')
-        resultDOM.innerHTML = `<p>${error.response?.data?.msg}</p>`
-      } else {
-        resultDOM.innerHTML = 'An unexpected error occurred.';
-      }
-    
+      localStorage.removeItem('token')
+      resultDOM.innerHTML = `<p>${error.response?.data?.msg || 'An error occurred.'}</p>`
+    } else {
+      resultDOM.innerHTML = 'An unexpected error occurred.';
+    }
   }
 })
 
