@@ -26,7 +26,7 @@ const authentication = async (req: AuthenticatedRequest, res: Response, next: Ne
     jwt.verify(token, jwtSecretKey, (err, user) => {
       if (err) {
         console.log(err)
-        throw new CustomAPIError('Token Expired', 403)
+        throw new CustomAPIError('Not authorized to access this route', 403)
       }
 
       const { id, username } = user as JwtPayload;
