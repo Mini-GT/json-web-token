@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 import { CustomAPIError } from "../errors/custom-error"
-import jwt, { JwtPayload } from "jsonwebtoken"
+import jwt from "jsonwebtoken"
 import "dotenv/config"
 
 const jwtSecretKey = process.env.JWT_SECRET
@@ -8,6 +8,11 @@ const jwtSecretKey = process.env.JWT_SECRET
 if (!jwtSecretKey) {
   throw new Error("jwtSecretKey is not defined in the environment variables");
 }
+
+interface AuthenticatedRequest extends Request {
+  user?: { id: string; username: string };
+}
+
 // check username, password in post(login) request
 // if exist create new JWT
 // send back to frontend
@@ -30,35 +35,17 @@ const login = async(req: Request, res: Response) => {
 
   // its better to keep payload small, better experience for user
   const token = jwt.sign({id, username}, jwtSecretKey, {expiresIn: 10})
-  
   res.status(200).json({success: true, msg: 'user created', token})
 }
 
-const dashboard = async(req: Request, res: Response) => {
-  // extract token
-  const authHeader = req.headers.authorization
-  const token = authHeader && authHeader.split(' ')[1]
-  
-  if (!token) {
-    return res.status(401).json({ msg: 'Access denied, token missing' });
+const dashboard = async(req: AuthenticatedRequest, res: Response) => {
+  if(!req.user) {
+    throw new CustomAPIError('Invalid User', 401)
   }
+  
+  const luckyNumber = Math.floor(Math.random()*100)
 
-  // Verify token
-  jwt.verify(token, jwtSecretKey, (err, user) => {
-    if (err) {
-      throw new CustomAPIError('Invalid Token', 403)
-    }
-
-    const { username } = user as JwtPayload;
-
-    if(!username) {
-      throw new CustomAPIError('Invalid username', 403)
-    }
-    
-    const luckyNumber = Math.floor(Math.random()*100)
-
-    res.status(200).json({msg: `Hello, ${username}`, secret:`Here is your authorized data, your lucky number is ${luckyNumber}`})
-  });
+  res.status(200).json({msg: `Hello, ${req.user.username}`, secret:`Here is your authorized data, your lucky number is ${luckyNumber}`})
 }
 
 export {
